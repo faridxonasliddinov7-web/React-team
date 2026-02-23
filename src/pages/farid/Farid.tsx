@@ -13,12 +13,7 @@ const Farid = () => {
 					imageUrl='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzR0bIMZ71HVeR5zF4PihQaDvTQQk6bsVERw&s'
 					isStudent='Farid'
 				/>
-
-
 			</main>
-
-
-
 		</>
 	)
 }

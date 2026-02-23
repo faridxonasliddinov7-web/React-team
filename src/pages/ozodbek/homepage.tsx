@@ -1,6 +1,6 @@
+import { Link,Route } from 'react-router-dom'
 import UserCard from './companenti/card'
 import LikeDisplay from './companenti/likedisplay'
-
 function Ozodbek() {
 	return (
 		<>
@@ -17,6 +17,10 @@ function Ozodbek() {
 				/>
 			</main>
 			<LikeDisplay />
+			<div className='mt-24'>
+				<Link to={'https://google.com'}>Google ga o'tish</Link>
+			</div>
+		
 		</>
 	)
 }

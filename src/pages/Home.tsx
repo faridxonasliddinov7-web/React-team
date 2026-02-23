@@ -1,17 +1,14 @@
 import { ArrowBigRight } from 'lucide-react'
-import { useEffect, type JSX } from 'react'
+import { type JSX } from 'react'
 import { Link } from 'react-router-dom'
 import StudentButton from '../components/StudentButton'
 import { students } from '../data/students'
 const Home = (): JSX.Element => {
-	useEffect(() => {
-		document.title = 'Mentor Template'
-	}, [])
 	return (
 		<div style={{ padding: 40 }}>
 			<h1 className='text-green-500'>Mentor React Platform</h1>
 
-			<Link to='/mentor' >
+			<Link to='/mentor'>
 				<button className='py-2 px-4 bg-green-500 rounded-xl flex text-gray-600 font-bold '>
 					🧑🏻‍🏫 Mentor <ArrowBigRight fill='black' />
 				</button>

@@ -1,10 +1,9 @@
-// const enum kasb {
-// 	mentor = 'Mentor',
-// 	student = 'Student',
-// }
-
 import { Mail, Phone } from 'lucide-react'
-import LikeDisplay from '../LikeDisplay'
+import { useEffect, useState } from 'react'
+import { Button } from '../../../components/ui/button'
+import LikeDisplay from './LikeDisplay'
+import Modal from './modal'
+import TimerModal from './timerModal'
 
 interface ICard {
 	firstname: string
@@ -26,6 +25,34 @@ function UserCard({
 	isStudent,
 }: ICard) {
 	const isMentor = isStudent === 'Mentor'
+	const [open, setOpen] = useState(false)
+	const [timerModalOpen, setTimerModalOpen] = useState<boolean>(false)
+	const [timer, setTimer] = useState<number>(15)
+	const audio = new Audio('/audio.wav')
+	const audio10 = new Audio('/audio10.wav')
+
+	useEffect(() => {
+		let interval: number
+		if (timerModalOpen) {
+			interval = setInterval(() => {
+				setTimer(oldingi => {
+					if (oldingi === 10) {
+						audio10.play()
+						return oldingi - 1
+					} else if (oldingi <= 0) {
+						clearInterval(interval)
+						audio.play()
+						return 0
+					}
+					return oldingi - 1
+				})
+			}, 1000)
+		}
+
+		return () => {
+			clearInterval(interval)
+		}
+	}, [timerModalOpen])
 
 	return (
 		<div className='max-w-sm mx-auto  bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300'>
@@ -101,16 +128,30 @@ function UserCard({
 				<div className='mt-6 flex space-x-3'>
 					<button
 						className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors ${isMentor ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-500 hover:bg-green-600'} text-white`}
+						onClick={() => setOpen(true)}
 					>
-						Send Message
+						My Friends
 					</button>
-					<button className='flex-1 py-3 px-4 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors'>
+					{open && <Modal onClose={() => setOpen(false)} />}
+					<button
+						className='flex-1 py-3 px-4 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors'
+						onClick={() => setTimerModalOpen(true)}
+					>
 						View Profile
 					</button>
+					{timerModalOpen && (
+						<TimerModal
+							onClose={() => setTimerModalOpen(false)}
+							second={timer}
+						/>
+					)}
 				</div>
 			</div>
 			<div className='flex flex-col justify-center items-center px-6 pb-6'>
 				<LikeDisplay />
+			</div>
+			<div>
+				<Button>Tugma</Button>
 			</div>
 		</div>
 	)
